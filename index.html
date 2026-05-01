@@ -89,6 +89,10 @@ body{
 .orb1{width:600px;height:600px;background:radial-gradient(circle,#c8964a18 0%,transparent 70%);top:-100px;right:-100px}
 .orb2{width:500px;height:500px;background:radial-gradient(circle,#4a6cc818 0%,transparent 70%);bottom:-100px;left:-100px}
 .orb3{width:400px;height:400px;background:radial-gradient(circle,#c8964a10 0%,transparent 70%);top:40%;left:30%}
+.particle-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.particle-bg .particle{position:absolute;border-radius:50%;pointer-events:none;opacity:.35;filter:blur(1px);background:radial-gradient(circle,rgba(200,150,74,.9) 0%,rgba(200,150,74,0) 65%);animation:floatParticle linear infinite}
+.particle-bg .particle:nth-child(odd){background:radial-gradient(circle,rgba(74,108,200,.75) 0%,rgba(74,108,200,0) 65%)}
+@keyframes floatParticle{0%{transform:translateY(0) scale(1);opacity:.4}50%{transform:translateY(-120px) scale(.9);opacity:.15}100%{transform:translateY(0) scale(1);opacity:.4}}
 
 /* ─── NAV ───────────────────────────────── */
 nav{
@@ -219,6 +223,84 @@ nav{
   color:var(--text);
 }
 .btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.hero-abstract{
+  font-size:clamp(.85rem,1.8vw,1.05rem);
+  color:var(--dim);
+  margin-top:1rem;
+  max-width:680px;
+  margin-left:auto;
+  margin-right:auto;
+  line-height:1.8;
+  letter-spacing:.02em;
+  opacity:.85;
+}
+.concepts{
+  padding:6rem 3rem 4rem;
+  max-width:1200px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:repeat(3,minmax(220px,1fr));
+  gap:1.5rem;
+}
+.concept-card{
+  padding:2rem;
+  background:rgba(255,255,255,.05);
+  border:1px solid var(--glass-border);
+  border-radius:26px;
+  backdrop-filter:var(--blur);
+  transition:transform .35s,background .35s;
+}
+.concept-card:hover{transform:translateY(-6px);background:rgba(255,255,255,.08)}
+.concept-card h3{
+  font-family:var(--font-display);
+  font-size:1.4rem;
+  margin-bottom:.8rem;
+  color:var(--text);
+}
+.concept-card p{
+  font-size:.82rem;
+  line-height:1.85;
+  color:var(--muted);
+}
+.abstract-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:.5rem;
+  font-family:var(--font-mono);
+  font-size:.58rem;
+  color:var(--accent);
+  text-transform:uppercase;
+  letter-spacing:.2em;
+  margin-top:1rem;
+}
+.quote-strip{
+  padding:3rem 3rem 2rem;
+  background:linear-gradient(135deg,rgba(200,150,74,.08),rgba(74,108,200,.06));
+  border-top:1px solid var(--glass-border);
+  border-bottom:1px solid var(--glass-border);
+  margin:4rem 0;
+}
+.quote-strip p{
+  font-size:1rem;
+  line-height:1.9;
+  color:var(--text);
+  max-width:860px;
+  margin:0 auto;
+  text-align:center;
+}
+.quote-strip em{color:var(--accent);}
+@media(max-width:900px){.concepts{grid-template-columns:1fr}.quote-strip{padding:2rem}}
+
+#abstracts{padding:7rem 3rem;max-width:1200px;margin:0 auto}
+.idea-grid{display:grid;grid-template-columns:repeat(4,minmax(210px,1fr));gap:1.25rem;margin-top:2rem}
+.idea-card{padding:1.8rem;background:rgba(255,255,255,.06);border:1px solid var(--glass-border);border-radius:22px;transition:transform .3s,box-shadow .3s}
+.idea-card:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(0,0,0,.16)}
+.idea-number{font-family:var(--font-mono);font-size:.75rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:.85rem}
+.idea-card h3{font-family:var(--font-display);font-size:1.2rem;margin-bottom:.65rem;color:var(--text)}
+.idea-card p{font-size:.8rem;line-height:1.8;color:var(--muted)}
+@media(max-width:1000px){.idea-grid{grid-template-columns:repeat(2,minmax(220px,1fr))}}
+@media(max-width:700px){.idea-grid{grid-template-columns:1fr}}
+
 /* ─── TYPEWRITER ROLE ────────────────────── */
 .hero-role-line{
   display:flex;align-items:center;justify-content:center;gap:.7rem;
@@ -552,6 +634,7 @@ footer{
 <div class="bg-orb orb1"></div>
 <div class="bg-orb orb2"></div>
 <div class="bg-orb orb3"></div>
+<div class="particle-bg" id="particleBg"></div>
 
 <!-- LOADER -->
 <div id="loader">
@@ -594,6 +677,7 @@ footer{
   <a href="#hero" class="nav-logo">M·Abubakar</a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
+    <li><a href="#abstracts">Philosophy</a></li>
     <li><a href="#coverages">Experience</a></li>
     <li><a href="#motivation">Motivation</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -602,6 +686,7 @@ footer{
 </nav>
 <div class="mob-menu" id="mobMenu">
   <a href="#about" class="ml">About</a>
+  <a href="#abstracts" class="ml">Philosophy</a>
   <a href="#coverages" class="ml">Experience</a>
   <a href="#motivation" class="ml">Motivation</a>
   <a href="#contact" class="ml">Contact</a>
@@ -620,6 +705,7 @@ footer{
       Muhammad<em>Abubakar</em>
     </h1>
     <p class="hero-tagline">Precision through the principles of physics &amp; code</p>
+    <p class="hero-abstract">Crafting systems where motion becomes meaning, structure becomes story, and engineering blends with modern digital intuition.</p>
     <div class="hero-role-line">
       <span class="role-prefix">I'm a</span>
       <span class="role-word" id="roleWord">Mechanical Engineer</span>
@@ -657,6 +743,34 @@ footer{
   </div>
 </div>
 
+<!-- ABSTRACT IDEAS -->
+<section id="abstracts">
+  <p class="s-label reveal">Abstract Ideas</p>
+  <h2 class="s-title reveal">What guides<br><em>the craft</em></h2>
+  <div class="idea-grid reveal d1">
+    <div class="idea-card">
+      <span class="idea-number">01</span>
+      <h3>Sense patterns</h3>
+      <p>Read systems as networks of force, energy, and intent to build more intuitive solutions.</p>
+    </div>
+    <div class="idea-card">
+      <span class="idea-number">02</span>
+      <h3>Solve clearly</h3>
+      <p>Turn complex requirements into streamlined execution by focusing on boundaries and purpose.</p>
+    </div>
+    <div class="idea-card">
+      <span class="idea-number">03</span>
+      <h3>Sketch concepts</h3>
+      <p>Explore structures through visuals and prototypes so ideas become tangible earlier in the process.</p>
+    </div>
+    <div class="idea-card">
+      <span class="idea-number">04</span>
+      <h3>Ship intentionally</h3>
+      <p>Deliver solutions that balance reliability, performance, and the needs of the people who use them.</p>
+    </div>
+  </div>
+</section>
+
 <!-- ABOUT -->
 <section id="about">
   <div class="about-img-wrap reveal">
@@ -666,7 +780,7 @@ footer{
       <div class="photo-fallback" id="photoFallback">
         <div class="photo-initials">MA</div>
         <div class="photo-name-tag">Muhammad Abubakar</div>
-        <div class="photo-upload-note">"WhatsApp Image 2026-04-29 at 11.17.16 PM.jpeg"</div>
+        <div class="photo-upload-note">"Muhammad Abubakar"</div>
       </div>
       <img class="about-photo" id="aboutPhoto" src="WhatsApp Image 2026-04-29 at 11.17.16 PM.jpeg.jpeg" alt="Muhammad Abubakar" style="display:none">
     </div>
@@ -681,6 +795,28 @@ footer{
       <div class="stat-card"><div class="n">3</div><div class="l">Key Industry Roles</div></div>
       <div class="stat-card"><div class="n">Co-AJS</div><div class="l">ASHRAE UET</div></div>
     </div>
+  </div>
+</section>
+
+<section id="concepts">
+  <p class="s-label reveal">Design Philosophy</p>
+  <h2 class="s-title reveal">Abstract<br><em>Principles</em></h2>
+  <div class="concepts">
+    <article class="concept-card reveal d1">
+      <div class="abstract-pill">Form</div>
+      <h3>Material turned into meaning</h3>
+      <p>Every part is selected not just for function, but to speak clearly about strength, balance and elegance in motion.</p>
+    </article>
+    <article class="concept-card reveal d2">
+      <div class="abstract-pill">Force</div>
+      <h3>Energy shaped into systems</h3>
+      <p>Calculated forces and thermal flows are the invisible threads that hold modern machines together with reliability.</p>
+    </article>
+    <article class="concept-card reveal d3">
+      <div class="abstract-pill">Flow</div>
+      <h3>Logic woven through motion</h3>
+      <p>Design becomes seamless when airflow, power and information travel with intention across every component.</p>
+    </article>
   </div>
 </section>
 
@@ -705,6 +841,10 @@ footer{
     </a>
   </div>
 </section>
+
+<div class="quote-strip reveal d1">
+  <p><em>Engineering is the art of shaping the unseen into the tangible.</em> This page traces that same spirit from concept to crafted result.</p>
+</div>
 
 <!-- MOTIVATION -->
 <section id="motivation">
@@ -831,6 +971,28 @@ window.addEventListener('load',()=>{
 // ── CURSOR ─────────────────────────────────────
 const cEl=document.getElementById('cur');
 const cTrail=document.getElementById('cur-trail');
+
+function initParticleBackground(){
+  const container=document.getElementById('particleBg');
+  if(!container) return;
+  const count=24;
+  for(let i=0;i<count;i++){
+    const particle=document.createElement('span');
+    particle.className='particle';
+    const size=Math.random()*12+6;
+    particle.style.width=`${size}px`;
+    particle.style.height=`${size}px`;
+    particle.style.left=`${Math.random()*100}%`;
+    particle.style.top=`${Math.random()*100}%`;
+    particle.style.animationDuration=`${Math.random()*18+12}s`;
+    particle.style.animationDelay=`-${Math.random()*20}s`;
+    particle.style.opacity=0.2+Math.random()*0.35;
+    particle.style.transform=`translateY(0) scale(${0.8+Math.random()*0.4})`;
+    container.appendChild(particle);
+  }
+}
+
+document.addEventListener('DOMContentLoaded',initParticleBackground);
 let cx=0,cy=0,tx=0,ty=0;
 document.addEventListener('mousemove',e=>{
   cx=e.clientX;cy=e.clientY;
